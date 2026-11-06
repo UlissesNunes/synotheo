@@ -17,7 +17,7 @@
   padding-inline: 11px;
   border: 1px solid var(--color-rule);
   white-space: nowrap;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   transition: color 0.45s var(--ease-paper);
 }
 
@@ -82,7 +82,7 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .hero-arrow[data-side='prev'] {
@@ -109,4 +109,84 @@
   .hero-arrow[data-side='next'] {
     right: 6px;
   }
+}
+
+/* Botão de play */
+.hero-play {
+  position: absolute;
+  top: calc(50% + var(--shelf-h) * 0.36);
+  left: calc(50% - var(--d) / 2 - 6px);
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  border: 1px solid var(--color-cobalt);
+  border-radius: 50%;
+  background-color: rgb(237 235 230 / 0.75);
+  color: var(--color-cobalt);
+  transform: scale(0);
+  cursor: var(--cursor-pointer);
+}
+
+/* Disco "Abrir" sobre a capa */
+@media (pointer: fine) {
+  html:has(.hero-cursor[data-state='open']),
+  html:has(.hero-cursor[data-state='open']) * {
+    cursor: none;
+  }
+}
+
+.hero-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  pointer-events: none;
+}
+
+.hero-cursor:not([data-visible]) {
+  visibility: hidden;
+}
+
+@media (pointer: coarse) {
+  .hero-cursor {
+    display: none;
+  }
+}
+
+.hero-cursor-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--color-cobalt);
+  transform: scale(0);
+  transition: transform 0.4s var(--ease-paper);
+}
+
+.hero-cursor-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  transform: scale(0);
+  transition: transform 0.35s var(--ease-paper);
+}
+
+.hero-cursor[data-state='open'] .hero-cursor-disc,
+.hero-cursor[data-state='open'] .hero-cursor-label {
+  transform: scale(1);
 }

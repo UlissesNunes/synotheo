@@ -1,3 +1,8 @@
+import { smoothstep } from './ShelfGeometry';
+
+/** Quão rápido o botão de play some conforme a estante se afasta do alvo. */
+const SETTLE_SPEED = 3;
+
 /** Resto sempre positivo: positiveModulo(-1, 66) = 65. */
 export function positiveModulo(value: number, divisor: number): number {
   return ((value % divisor) + divisor) % divisor;
@@ -32,4 +37,9 @@ export function normalizationShift(scroll: number, loopLength: number, maxLoops:
     return 0;
   }
   return Math.trunc(scroll / loopLength) * loopLength;
+}
+
+/** 1 com a estante parada no alvo, 0 a partir de 1/3 de volume de distância. */
+export function settleProgress(scroll: number, target: number): number {
+  return smoothstep(1 - Math.abs(target - scroll) * SETTLE_SPEED);
 }

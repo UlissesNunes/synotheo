@@ -5,7 +5,13 @@ import {
   tapeOffsetX,
   wrapRelativeIndex,
 } from './ShelfGeometry';
-import { activeIndexFor, approach, nearestTarget, normalizationShift } from './ShelfNavigation';
+import {
+  activeIndexFor,
+  approach,
+  nearestTarget,
+  normalizationShift,
+  settleProgress,
+} from './ShelfNavigation';
 
 const MAX_FRAME_SECONDS = 0.05;
 const SCROLL_RATE = 5.2;
@@ -67,6 +73,8 @@ export class ShelfEngine {
 
   private tapes: TapeState[] = [];
   private viewport: ShelfViewport | null = null;
+  private playRing: HTMLElement | null = null;
+  private playRingScale = -1;
 
   private scroll: number;
   private target: number;
@@ -107,6 +115,11 @@ export class ShelfEngine {
     }));
   }
 
+  registerPlayRing(element: HTMLElement | null): void {
+    this.playRing = element;
+    this.playRingScale = -1;
+  }
+
   setViewport(viewport: ShelfViewport): void {
     this.viewport = viewport;
     if (!this.hasPointer) {
@@ -126,6 +139,7 @@ export class ShelfEngine {
     }
     window.clearTimeout(this.wheelTimer);
     this.tapes = [];
+    this.playRing = null;
   }
 
   // ─── Comandos ───────────────────────────────────────────────
@@ -226,6 +240,7 @@ export class ShelfEngine {
     this.updateActive();
     this.updateTilt(dt);
     this.render(dt);
+    this.renderPlayRing();
 
     this.frameId = requestAnimationFrame(this.tick);
   };
@@ -319,5 +334,15 @@ export class ShelfEngine {
       spine.style.setProperty('--shade', String(pose.spineShade));
       cover.style.setProperty('--shade', String(pose.coverShade));
     });
+  }
+
+  private renderPlayRing(): void {
+    if (!this.playRing) return;
+
+    const scale = this.isOpen ? 0 : settleProgress(this.scroll, this.target);
+    if (scale === this.playRingScale) return;
+
+    this.playRingScale = scale;
+    this.playRing.style.transform = `scale(${scale})`;
   }
 }

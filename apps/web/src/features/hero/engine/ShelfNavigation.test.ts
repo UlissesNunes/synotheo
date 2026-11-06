@@ -6,6 +6,7 @@ import {
   nearestTarget,
   normalizationShift,
   positiveModulo,
+  settleProgress,
 } from './ShelfNavigation';
 
 const BOOKS = 66;
@@ -75,5 +76,20 @@ describe('normalizationShift', () => {
   it('desconta voltas inteiras quando o scroll cresce demais', () => {
     expect(normalizationShift(1000, 198, 4)).toBe(990);
     expect(normalizationShift(-1000, 198, 4)).toBe(-990);
+  });
+});
+
+describe('settleProgress', () => {
+  it('é 1 com a estante parada', () => {
+    expect(settleProgress(17, 17)).toBe(1);
+  });
+
+  it('é 0 a partir de um terço de volume do alvo', () => {
+    expect(settleProgress(17, 17.34)).toBe(0);
+    expect(settleProgress(17, 14)).toBe(0);
+  });
+
+  it('cresce conforme a estante se aproxima do alvo', () => {
+    expect(settleProgress(17, 17.1)).toBeGreaterThan(settleProgress(17, 17.2));
   });
 });

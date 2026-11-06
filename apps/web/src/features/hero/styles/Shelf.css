@@ -28,8 +28,8 @@
   touch-action: pan-y;
 }
 
-.shelf[data-on-cover='true'] {
-  cursor: pointer;
+.shelf[data-cursor='open'] {
+  cursor: var(--cursor-pointer);
 }
 
 .shelf-stage {
@@ -52,7 +52,7 @@
   left: 0;
   transform-style: preserve-3d;
   will-change: transform;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .shelf-face {

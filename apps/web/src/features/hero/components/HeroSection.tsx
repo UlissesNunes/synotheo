@@ -8,6 +8,7 @@ import { usePrefersReducedMotion } from '@/shared/hooks/UsePrefersReducedMotion'
 import { useCaptionQueue } from '../hooks/UseCaptionQueue';
 import { useShelfEngine } from '../hooks/UseShelfEngine';
 import { DivisionTabs } from './DivisionTabs';
+import { HeroCursor } from './HeroCursor';
 import { Shelf } from './Shelf';
 import { ShelfArrows } from './ShelfArrows';
 import { ShelfCaption } from './ShelfCaption';
@@ -18,7 +19,7 @@ export function HeroSection() {
   const reducedMotion = usePrefersReducedMotion();
   const caption = useCaptionQueue(INITIAL_INDEX);
 
-  const { sectionRef, stageRef, probeRef, handlers, controls } = useShelfEngine({
+  const { sectionRef, stageRef, probeRef, playRingRef, handlers, controls } = useShelfEngine({
     initialIndex: INITIAL_INDEX,
     onActiveChange: caption.show,
   });
@@ -34,7 +35,14 @@ export function HeroSection() {
         }}
       />
 
-      <Shelf sectionRef={sectionRef} stageRef={stageRef} probeRef={probeRef} handlers={handlers} />
+      <Shelf
+        sectionRef={sectionRef}
+        stageRef={stageRef}
+        probeRef={probeRef}
+        playRingRef={playRingRef}
+        handlers={handlers}
+        onPlay={controls.open}
+      />
 
       <ShelfCaption
         entries={caption.entries}
@@ -47,6 +55,8 @@ export function HeroSection() {
       <p className="sr-only" aria-live="polite">
         {activeBook.name}, {activeBook.chapters} capítulos
       </p>
+
+      <HeroCursor />
     </main>
   );
 }

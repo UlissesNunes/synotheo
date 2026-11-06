@@ -23,6 +23,7 @@ export type ShelfHandlers = Required<
 export interface ShelfControls {
   readonly step: (direction: Direction) => void;
   readonly goToIndex: (index: number) => void;
+  readonly open: () => void;
 }
 
 interface ShelfCallbacks {
@@ -59,6 +60,7 @@ export function useShelfEngine({
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const probeRef = useRef<HTMLDivElement>(null);
+  const playRingRef = useRef<HTMLButtonElement>(null);
   const engineRef = useRef<ShelfEngine | null>(null);
   const suppressClickRef = useRef(false);
 
@@ -85,15 +87,20 @@ export function useShelfEngine({
         callbacksRef.current.onOpenRequest?.();
       },
       onCoverHoverChange: (isOnCover) => {
-        section.dataset.onCover = String(isOnCover);
+        if (isOnCover) {
+          section.dataset.cursor = 'open';
+        } else {
+          delete section.dataset.cursor;
+        }
       },
     });
     engine.registerTapes(collectTapes(stage));
+    engine.registerPlayRing(playRingRef.current);
 
     const measure = () => {
       const dims = measureShelf(probe.getBoundingClientRect().height);
-      stage.style.setProperty('--ws', `${dims.spineWidth}px`);
-      stage.style.setProperty('--d', `${dims.coverWidth}px`);
+      section.style.setProperty('--ws', `${dims.spineWidth}px`);
+      section.style.setProperty('--d', `${dims.coverWidth}px`);
 
       const rect = section.getBoundingClientRect();
       engine.setViewport({
@@ -135,6 +142,7 @@ export function useShelfEngine({
       engine.destroy();
       engineRef.current = null;
       delete stage.dataset.ready;
+      delete section.dataset.cursor;
     };
   }, [initialIndex]);
 
@@ -184,9 +192,12 @@ export function useShelfEngine({
       goToIndex: (index) => {
         engineRef.current?.goToIndex(index);
       },
+      open: () => {
+        callbacksRef.current.onOpenRequest?.();
+      },
     }),
     [],
   );
 
-  return { sectionRef, stageRef, probeRef, handlers, controls };
+  return { sectionRef, stageRef, probeRef, playRingRef, handlers, controls };
 }
