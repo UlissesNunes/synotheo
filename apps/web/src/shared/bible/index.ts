@@ -11,5 +11,6 @@ export {
   TOTAL_BOOKS,
 } from './Bible';
 export { BIBLE_BOOKS, type BookSlug, TOTAL_CHAPTERS } from './BibleBooks';
+export { describeBook, formatChapters } from './BibleFormat';
 export { getBookAt, getBookBySlug, getFirstBookIndex, isBookSlug } from './BibleQueries';
-export { DIVISION_LABELS } from './Divisions';
+export { DIVISION_LABELS, TESTAMENT_LABELS } from './Divisions';

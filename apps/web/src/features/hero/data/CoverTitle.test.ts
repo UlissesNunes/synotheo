@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { coverTitleScale } from './CoverTitle';
+import { coverTitleScale, wrapCoverTitle } from './CoverTitle';
 
 describe('coverTitleScale', () => {
   it('usa o tamanho cheio em nomes curtos', () => {
@@ -18,5 +18,17 @@ describe('coverTitleScale', () => {
 
   it('nunca passa do tamanho cheio', () => {
     expect(coverTitleScale('')).toBe(1);
+  });
+});
+
+describe('wrapCoverTitle', () => {
+  it('mantém em uma linha o que cabe', () => {
+    expect(wrapCoverTitle('Gênesis')).toEqual(['Gênesis']);
+    expect(wrapCoverTitle('1 Samuel')).toEqual(['1 Samuel']);
+  });
+
+  it('quebra nomes compostos longos', () => {
+    expect(wrapCoverTitle('2 Coríntios')).toEqual(['2', 'Coríntios']);
+    expect(wrapCoverTitle('1 Tessalonicenses')).toEqual(['1', 'Tessalonicenses']);
   });
 });

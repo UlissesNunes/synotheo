@@ -1,0 +1,158 @@
+.book-sheet {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 110px 6vw 56px 7vw;
+  border: 0;
+  overflow: hidden;
+  background-color: var(--color-sheet);
+  color: var(--color-ink);
+}
+
+.book-sheet::backdrop {
+  background: transparent;
+}
+
+.book-sheet-close {
+  position: absolute;
+  top: 31px;
+  left: 32px;
+  z-index: 1;
+}
+
+.book-sheet-logo {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  height: 84px;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.book-sheet-body {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4vw;
+}
+
+.book-sheet-text {
+  display: flex;
+  max-width: 520px;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.book-sheet-mask {
+  overflow: hidden;
+}
+
+.book-sheet-title {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.book-sheet-summary {
+  max-width: 42ch;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.book-sheet-credit {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.book-sheet-cta {
+  display: inline-flex;
+  height: 44px;
+  margin-top: 10px;
+  align-items: center;
+  padding-inline: 20px;
+  border: 1px solid var(--color-cobalt);
+  color: var(--color-cobalt);
+}
+
+.book-poster {
+  height: min(100%, 78vh);
+  justify-self: center;
+  aspect-ratio: 474 / 900;
+}
+
+.poster-kicker {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+}
+
+.poster-title {
+  font-family: var(--font-serif);
+  letter-spacing: -0.025em;
+}
+
+.poster-original {
+  font-family: var(--font-sans);
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.poster-theme {
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-style: italic;
+}
+
+.poster-footer {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+@media (width < 48rem) {
+  .book-sheet {
+    padding: 84px 22px 40px;
+    overflow-y: auto;
+  }
+
+  .book-sheet-close {
+    top: 21px;
+    left: 16px;
+  }
+
+  .book-sheet-logo {
+    height: 64px;
+  }
+
+  .book-sheet-body {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .book-poster {
+    order: -1;
+    height: 46svh;
+  }
+
+  .book-sheet-title {
+    font-size: 42px;
+  }
+
+  .book-sheet-summary {
+    font-size: 16px;
+  }
+}

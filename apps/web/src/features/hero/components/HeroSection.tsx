@@ -2,11 +2,14 @@
 
 import '../styles/HeroChrome.css';
 
-import { getBookAt, getFirstBookIndex } from '@/shared/bible';
+import { useCallback, useState } from 'react';
+
+import { formatChapters, getBookAt, getFirstBookIndex } from '@/shared/bible';
 import { usePrefersReducedMotion } from '@/shared/hooks/UsePrefersReducedMotion';
 
 import { useCaptionQueue } from '../hooks/UseCaptionQueue';
 import { useShelfEngine } from '../hooks/UseShelfEngine';
+import { BookSheet } from './BookSheet';
 import { DivisionTabs } from './DivisionTabs';
 import { HeroCursor } from './HeroCursor';
 import { Shelf } from './Shelf';
@@ -18,11 +21,24 @@ const INITIAL_INDEX = 0;
 export function HeroSection() {
   const reducedMotion = usePrefersReducedMotion();
   const caption = useCaptionQueue(INITIAL_INDEX);
+  const [sheetIndex, setSheetIndex] = useState<number | null>(null);
 
   const { sectionRef, stageRef, probeRef, playRingRef, handlers, controls } = useShelfEngine({
     initialIndex: INITIAL_INDEX,
     onActiveChange: caption.show,
+    onOpenRequest: openSheet,
   });
+
+  function openSheet() {
+    if (sheetIndex !== null) return;
+    controls.setOpen(true);
+    setSheetIndex(caption.activeIndex);
+  }
+
+  const handleSheetClosed = useCallback(() => {
+    setSheetIndex(null);
+    controls.setOpen(false);
+  }, [controls]);
 
   const activeBook = getBookAt(caption.activeIndex);
 
@@ -53,10 +69,17 @@ export function HeroSection() {
       <ShelfArrows onStep={controls.step} />
 
       <p className="sr-only" aria-live="polite">
-        {activeBook.name}, {activeBook.chapters} capítulos
+        {activeBook.name}, {formatChapters(activeBook.chapters)}
       </p>
 
       <HeroCursor />
+
+      <BookSheet
+        bookIndex={sheetIndex}
+        reducedMotion={reducedMotion}
+        getOriginRect={controls.getCoverRect}
+        onClosed={handleSheetClosed}
+      />
     </main>
   );
 }

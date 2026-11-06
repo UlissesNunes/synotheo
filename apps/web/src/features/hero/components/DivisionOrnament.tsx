@@ -23,7 +23,7 @@ export function DivisionOrnament({ division, className }: DivisionOrnamentProps)
   );
 }
 
-function OrnamentShape({ division }: { readonly division: BookDivision }) {
+export function OrnamentShape({ division }: { readonly division: BookDivision }) {
   switch (division) {
     case 'law':
       // Duas tábuas da lei

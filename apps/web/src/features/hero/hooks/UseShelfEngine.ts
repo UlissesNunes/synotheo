@@ -24,8 +24,9 @@ export interface ShelfControls {
   readonly step: (direction: Direction) => void;
   readonly goToIndex: (index: number) => void;
   readonly open: () => void;
+  readonly setOpen: (isOpen: boolean) => void;
+  readonly getCoverRect: () => DOMRect | null;
 }
-
 interface ShelfCallbacks {
   readonly onActiveChange: (index: number, direction: Direction) => void;
   readonly onOpenRequest?: (() => void) | undefined;
@@ -195,6 +196,10 @@ export function useShelfEngine({
       open: () => {
         callbacksRef.current.onOpenRequest?.();
       },
+      setOpen: (isOpen) => {
+        engineRef.current?.setOpen(isOpen);
+      },
+      getCoverRect: () => engineRef.current?.getActiveCover()?.getBoundingClientRect() ?? null,
     }),
     [],
   );

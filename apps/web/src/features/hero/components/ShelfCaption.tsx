@@ -1,4 +1,4 @@
-import { type BibleBook } from '@/shared/bible';
+import { type BibleBook, formatChapters } from '@/shared/bible';
 
 import { type CaptionEntry } from '../states/CaptionQueue';
 import { CaptionLine } from './CaptionLine';
@@ -22,7 +22,7 @@ function renderSubtitle(book: BibleBook) {
 }
 
 function renderChapters(book: BibleBook) {
-  return `${book.chapters} capítulos`;
+  return formatChapters(book.chapters);
 }
 
 export function ShelfCaption({ entries, reducedMotion, onExited }: ShelfCaptionProps) {

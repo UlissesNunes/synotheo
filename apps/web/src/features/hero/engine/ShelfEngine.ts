@@ -148,6 +148,21 @@ export class ShelfEngine {
     return this.activeIndex;
   }
 
+  /** Face da capa do volume mais próximo do centro, de onde a folha de detalhe nasce. */
+  getActiveCover(): HTMLElement | null {
+    let closest: TapeState | null = null;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    for (const [virtualIndex, tape] of this.tapes.entries()) {
+      const distance = Math.abs(wrapRelativeIndex(virtualIndex, this.scroll, this.total));
+      if (distance < closestDistance) {
+        closest = tape;
+        closestDistance = distance;
+      }
+    }
+    return closest?.elements.cover ?? null;
+  }
+
   step(direction: Direction): void {
     if (this.isOpen) return;
     this.target = Math.round(this.target) + direction;
