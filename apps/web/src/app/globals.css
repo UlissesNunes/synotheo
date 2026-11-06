@@ -1,26 +1,64 @@
 @import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-paper: #edebe6;
+  --color-sheet: #f4f2ed;
+  --color-ink: #141414;
+  --color-muted: #6d6a63;
+  --color-cobalt: #1f3fb0;
+  --color-rule: rgb(20 20 20 / 0.9);
+
+  --ease-paper: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-sheet: cubic-bezier(0.76, 0, 0.18, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans:
+    var(--font-inter-tight), var(--font-noto-hebrew), var(--font-noto-greek), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility label {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+
+  @media (width < 48rem) {
+    font-size: 9px;
+  }
+}
+
+@utility label-box {
+  display: inline-flex;
+  align-items: center;
+  height: 21px;
+  padding-inline: 8px;
+  border: 1px solid var(--color-rule);
+}
+
+@utility paper-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .42 0 0 0 0 .38 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
 }

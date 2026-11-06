@@ -1,0 +1,210 @@
+:root {
+  --shelf-h: min(46vh, 31vw);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --shelf-h: min(60vw, 40svh);
+  }
+}
+
+/* Mede o valor real de --shelf-h em pixels */
+.shelf-probe {
+  position: absolute;
+  width: 0;
+  height: var(--shelf-h);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Palco 3D */
+.shelf {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(50% - var(--shelf-h) / 2 - 40px);
+  height: calc(var(--shelf-h) + 80px);
+  perspective: 2200px;
+  perspective-origin: 50% 50%;
+  touch-action: pan-y;
+}
+
+.shelf[data-on-cover='true'] {
+  cursor: pointer;
+}
+
+.shelf-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+.shelf-stage:not([data-ready]) {
+  visibility: hidden;
+}
+
+/* Volume e faces */
+.shelf-tape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.shelf-face {
+  position: absolute;
+  top: calc(var(--shelf-h) / -2);
+  height: var(--shelf-h);
+  overflow: hidden;
+  border-radius: 2px;
+  backface-visibility: hidden;
+  background-color: var(--art-bg);
+  color: var(--art-ink);
+}
+
+.shelf-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+  opacity: var(--shade, 0);
+  pointer-events: none;
+}
+
+.shelf-spine {
+  left: calc(var(--ws) / -2);
+  width: var(--ws);
+  transform: translateZ(calc(var(--d) / 2));
+}
+
+.shelf-cover {
+  left: calc(var(--d) / -2);
+  width: var(--d);
+  transform: rotateY(90deg) translateZ(calc(var(--ws) / 2));
+  box-shadow: 0 30px 60px -28px rgb(20 16 10 / 0.55);
+}
+
+/* Arte da lombada */
+.shelf-spine-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--shelf-h) * 0.025);
+  padding-block: calc(var(--shelf-h) * 0.03);
+}
+
+.shelf-spine-ornament {
+  flex: none;
+  width: 58%;
+  color: var(--art-accent);
+}
+
+.shelf-spine-title {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: calc(var(--shelf-h) * 0.05);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+}
+
+.shelf-spine-badge {
+  flex: none;
+  padding: 0.25em 0.4em;
+  border: 1px solid currentColor;
+  font-family: var(--font-sans);
+  font-size: calc(var(--shelf-h) * 0.018);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Arte da capa */
+.shelf-cover-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--shelf-h) * 0.045);
+}
+
+.shelf-cover-kicker {
+  font-family: var(--font-sans);
+  font-size: calc(var(--shelf-h) * 0.016);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--art-accent);
+}
+
+.shelf-cover-title {
+  margin-top: calc(var(--shelf-h) * 0.035);
+  font-family: var(--font-serif);
+  font-size: calc(var(--shelf-h) * 0.11 * var(--title-scale, 1));
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+}
+
+.shelf-cover-original {
+  display: block;
+  margin-top: calc(var(--shelf-h) * 0.022);
+  font-family: var(--font-sans);
+  font-size: calc(var(--shelf-h) * 0.034);
+  font-weight: 500;
+  text-align: left;
+  color: var(--art-accent);
+}
+
+.shelf-cover-theme {
+  margin-top: calc(var(--shelf-h) * 0.012);
+  font-family: var(--font-serif);
+  font-size: calc(var(--shelf-h) * 0.026);
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.shelf-cover-ornament {
+  width: 62%;
+  margin: auto;
+  color: var(--art-accent);
+}
+
+.shelf-cover-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: calc(var(--shelf-h) * 0.018);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.shelf-cover-badge {
+  padding: 0.3em 0.5em;
+  border: 1px solid currentColor;
+}
+
+/* Legenda */
+.shelf-caption {
+  position: absolute;
+  top: calc(50% + var(--shelf-h) / 2 + 30px);
+  left: 50%;
+  display: flex;
+  width: min(92vw, 760px);
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  text-align: center;
+  pointer-events: none;
+  transform: translateX(-50%);
+}

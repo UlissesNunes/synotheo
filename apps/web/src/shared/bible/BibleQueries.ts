@@ -19,6 +19,15 @@ export function getBookBySlug(slug: BookSlug): BibleBook {
   return book;
 }
 
+/** Livro pela posição na lista (0 = Gênesis, 65 = Apocalipse). */
+export function getBookAt(index: number): BibleBook {
+  const book = BIBLE_BOOKS[index];
+  if (!book) {
+    throw new RangeError(`Índice de livro inválido: ${index}`);
+  }
+  return book;
+}
+
 /** Índice (0 a 65) do primeiro livro da divisão. Usado pelas abas da estante. */
 export function getFirstBookIndex(division: BookDivision): number {
   const index = BIBLE_BOOKS.findIndex((book) => book.division === division);

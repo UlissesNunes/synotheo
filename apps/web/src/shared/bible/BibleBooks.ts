@@ -666,3 +666,4 @@ function toBook(row: BookRow, index: number): BibleBook {
 }
 
 export const BIBLE_BOOKS: readonly BibleBook[] = BOOK_ROWS.map(toBook);
+export const TOTAL_CHAPTERS = BIBLE_BOOKS.reduce((sum, book) => sum + book.chapters, 0);

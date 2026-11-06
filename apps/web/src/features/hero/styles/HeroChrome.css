@@ -1,0 +1,112 @@
+/* Abas das divisões */
+.hero-tabs {
+  position: absolute;
+  top: calc(50% - var(--shelf-h) / 2 - 86px);
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  transform: translateX(-50%);
+}
+
+.hero-tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding-inline: 11px;
+  border: 1px solid var(--color-rule);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.45s var(--ease-paper);
+}
+
+.hero-tab + .hero-tab {
+  margin-left: -1px;
+}
+
+.hero-tab[aria-pressed='true'] {
+  color: #fff;
+}
+
+.hero-tabs-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 23px;
+  background-color: var(--color-cobalt);
+}
+
+.hero-tabs-indicator[data-ready] {
+  transition:
+    width 0.6s var(--ease-paper),
+    transform 0.6s var(--ease-paper);
+}
+
+/* Legenda */
+.hero-caption {
+  position: absolute;
+  top: calc(50% + var(--shelf-h) / 2 + 30px);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.hero-caption-mask {
+  position: relative;
+  width: min(92vw, 760px);
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero-caption-mask > * {
+  display: block;
+}
+
+.hero-caption-mask > * + * {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+}
+
+/* Setas */
+.hero-arrow {
+  position: absolute;
+  top: calc(50% + var(--shelf-h) / 2 + 40px);
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.hero-arrow[data-side='prev'] {
+  left: 20px;
+}
+
+.hero-arrow[data-side='next'] {
+  right: 20px;
+}
+
+@media (width < 48rem) {
+  .hero-tabs {
+    top: calc(50% - var(--shelf-h) / 2 - 70px);
+  }
+
+  .hero-tab {
+    padding-inline: 6px;
+  }
+
+  .hero-arrow[data-side='prev'] {
+    left: 6px;
+  }
+
+  .hero-arrow[data-side='next'] {
+    right: 6px;
+  }
+}

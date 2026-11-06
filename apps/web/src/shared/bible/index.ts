@@ -10,6 +10,6 @@ export {
   toCanonicalOrder,
   TOTAL_BOOKS,
 } from './Bible';
-export { BIBLE_BOOKS, type BookSlug } from './BibleBooks';
-export { getBookBySlug, getFirstBookIndex, isBookSlug } from './BibleQueries';
+export { BIBLE_BOOKS, type BookSlug, TOTAL_CHAPTERS } from './BibleBooks';
+export { getBookAt, getBookBySlug, getFirstBookIndex, isBookSlug } from './BibleQueries';
 export { DIVISION_LABELS } from './Divisions';

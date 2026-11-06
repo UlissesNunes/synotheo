@@ -1,7 +1,11 @@
-export default function Home() {
+import { HeroFooter, HeroHeader, HeroSection } from '@/features/hero';
+
+export default function HomePage() {
   return (
     <>
-      <h1>Welcome to Next.js!</h1>
+      <HeroHeader />
+      <HeroSection />
+      <HeroFooter />
     </>
   );
 }
